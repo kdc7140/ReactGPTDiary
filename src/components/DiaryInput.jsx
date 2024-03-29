@@ -3,18 +3,31 @@ import { useState } from "react";
 import { Title } from "./CommonStyles";
 import styled from "styled-components";
 import { FileImageOutlined } from "@ant-design/icons";
+import { useNavigate } from "react-router-dom";
+
+
+
+
+
 // import html2canvas from "html2canvas";
 
 const { TextArea } = Input;
 
 const DiaryInput = ({ isLoading, onSubmit, messageApi }) => {
   const [userInput, setUserInput] = useState("");
+  const movePage = useNavigate();
   // 사용자의 입력을 받아, 상위컴포넌트로 데이터를 전달
 
   // loading 상태 - 사용자가 제출버튼을 못 누르도록 처리
   const handleUserInput = (e) => {
     setUserInput(e.target.value);
   };
+
+  const selectMusic = () => {
+    console.log("search music");
+    movePage('/search');
+  };
+
   const handleClick = () => {
     if (!userInput) {
       messageApi.open({
@@ -89,14 +102,17 @@ const DiaryInput = ({ isLoading, onSubmit, messageApi }) => {
 
   return (
     <div>
-      <Title>오늘의 일;</Title>
+      <Title>오늘의 일</Title>
+      
       <TextArea
         value={userInput}
         onChange={handleUserInput}
         placeholder="오늘 일어난 일들을 간단히 적어주세요."
         style={{ height: "200px" }}
       />
+      
       <ButtonContainer>
+        <Button onClick={selectMusic}>노래 선택</Button>
         <Button loading={isLoading} onClick={handleClick}>
           GPT 회고록을 작성해줘!
         </Button>
@@ -108,6 +124,7 @@ const DiaryInput = ({ isLoading, onSubmit, messageApi }) => {
           저장
         </Button>
       </ButtonContainer>
+      
       <canvas id="canvas" style={{ display: "none" }}></canvas>
     </div>
   );
