@@ -6,14 +6,11 @@ import { FileImageOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 
 
-
-
-
-// import html2canvas from "html2canvas";
+import html2canvas from "html2canvas";
 
 const { TextArea } = Input;
 
-const DiaryInput = ({ isLoading, onSubmit, messageApi }) => {
+const DiaryInput = ({ isLoading, onSubmit, messageApi, disabeld }) => {
   const [userInput, setUserInput] = useState("");
   const movePage = useNavigate();
   // 사용자의 입력을 받아, 상위컴포넌트로 데이터를 전달
@@ -112,17 +109,9 @@ const DiaryInput = ({ isLoading, onSubmit, messageApi }) => {
       />
       
       <ButtonContainer>
-        <Button onClick={selectMusic}>노래 선택</Button>
-        <Button loading={isLoading} onClick={handleClick}>
-          GPT 회고록을 작성해줘!
-        </Button>
-        <Button
-          icon={<FileImageOutlined />}
-          loading={isLoading}
-          onClick={captureAndDownload}
-        >
-          저장
-        </Button>
+        <Button className="yellowBtn" onClick={selectMusic}>노래 선택</Button>
+        <Button className="darkYellowBtn" loading={isLoading} onClick={handleClick}>GPT 회고록을 작성해줘!</Button>
+        <Button className="saveBtn" disabled={disabeld} loading={isLoading} onClick={captureAndDownload}>저장 </Button>
       </ButtonContainer>
       
       <canvas id="canvas" style={{ display: "none" }}></canvas>
@@ -138,4 +127,5 @@ const ButtonContainer = styled.div`
   flex-flow: row nowrap;
   justify-content: flex-end;
   gap: 5px;
+  margin-right: 0;
 `;
