@@ -22,6 +22,7 @@ const SearchComponent = () => {
 	};
 
 	const handlePlayTrack = async (uri) => {
+		console.log(uri);
 		const token = localStorage.getItem("token");
 		setAccessToken(token);
 		setSelectedTrack(uri);
@@ -35,14 +36,14 @@ const SearchComponent = () => {
 
 	return (
 		<div>
-			<header className='search-box'>
+			<div className='search-box'>
 				<input
 					type="text"
 					value={query}
 					onChange={(e) => setQuery(e.target.value)}
 				/>
-				<button onClick={handleSearch}>검색</button>
-			</header>
+				<button className="saveBtn" onClick={handleSearch}>검색</button>
+			</div>
 			<ul className='search-list'>
 				{results.map((result) => (
 					<li className='search-items' key={result.id}>
@@ -57,15 +58,15 @@ const SearchComponent = () => {
 									)}
 								</div>
 								<div className='text'>
-									<div><strong>{result.name}</strong></div>
+									<div className="music-title">{result.name}</div>
 									<div>
-										{result.artists.map((artist) => <div key={artist.id}>{artist.name}</div>)}
+										{result.artists.map((artist) => <div className="artists" key={artist.id}>{artist.name}</div>)}
 									</div>
 								</div>
 							</div>
 							<div className='handler'>
-								<button onClick={() => handlePlayTrack(result.uri)}>재생</button>
-								<button onClick={() => { modalHandler(result, true) }}>선택</button>
+								<button className="play-btn" onClick={() => handlePlayTrack(result.uri)}>재생</button>
+								<button className="choice-btn" onClick={() => { modalHandler(result, true) }}>선택</button>
 							</div>
 						</article>
 					</li>
@@ -90,9 +91,8 @@ function Modal({ data, onCancel }) {
 	return (
 	<section className='modal'>
 		<div>
-			<h2>Confirm</h2>
-			<div>선택한 곡을 저장하시겠습니까?</div>
-			<div>
+			<div className="modal-title">선택한 곡을 저장하시겠습니까?</div>
+			<div className="modal-btn-area">
 				<button onClick={onSubmitHandler}>저장</button>
 				<button onClick={() => { onCancel({}, false) }}>취소</button>
 			</div>
